@@ -1,45 +1,41 @@
 syntax = "proto3";
 
-package workflow;
+package auth;
 
-option go_package = "grevtsov.workflow_managment.v1;workflow_managmentv1";
+option go_package = "grevtsov.sso.v1;ssov1";
 
 import "google/protobuf/empty.proto";
 
-service TaskService {
-  rpc CreateTask (CreateTaskRequest) returns (Task);
-  rpc GetTask (GetTaskRequest) returns (Task);
-  rpc ListTasks (ListTasksRequest) returns (ListTasksResponse);
-  rpc AssignTask (AssignTaskRequest) returns (google.protobuf.Empty);
+service Auth {
+  rpc Register (RegisterRequest) returns (RegisterResponse);
+  rpc Login (LoginRequest) returns (LoginResponse);
+  rpc IsAdmin (IsAdminRequest) returns (IsAdminResponse);
+  rpc Logout (google.protobuf.Empty) returns (google.protobuf.Empty);
 }
 
-message Task {
-  int64 id = 1;
-  string title = 2;
-  string description = 3;
-  int64 assignee_id = 4;
-  bool completed = 5;
+message RegisterRequest {
+  string email = 1;
+  string password = 2;
 }
 
-message CreateTaskRequest {
-  string title = 1;
-  string description = 2;
+message RegisterResponse {
+  int64 user_id = 1;
 }
 
-message GetTaskRequest {
-  int64 id = 1;
+message LoginRequest {
+  string email = 1;
+  string password = 2;
+  int32 app_id = 3;
 }
 
-message ListTasksRequest {
-  int64 assignee_id = 1;
-  bool completed = 2;
+message LoginResponse {
+  string token = 1;
 }
 
-message ListTasksResponse {
-  repeated Task tasks = 1;
+message IsAdminRequest {
+  int64 user_id = 1;
 }
 
-message AssignTaskRequest {
-  int64 task_id = 1;
-  int64 assignee_id = 2;
+message IsAdminResponse {
+  bool isAdmin = 1;
 }
