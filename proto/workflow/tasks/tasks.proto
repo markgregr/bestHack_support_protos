@@ -20,6 +20,9 @@ message Task {
   TaskStatus status = 5;
   int64 case_id = 6;
   int64 cluster_id = 7;
+  string created_at = 8;
+  string formed_at = 9;
+  string completed_at = 10;
 }
 
 message CreateTaskRequest {
