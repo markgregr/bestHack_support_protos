@@ -16,7 +16,7 @@ message Task {
   int64 id = 1;
   string title = 2;
   string description = 3;
-  int64 specialist_id = 4;
+  string email = 4;
   TaskStatus status = 5;
   int64 case_id = 6;
   int64 cluster_id = 7;
@@ -25,18 +25,15 @@ message Task {
 message CreateTaskRequest {
   string title = 1;
   string description = 2;
-  int64 specialist_id = 3;
-  int64 case_id = 4;
   int64 cluster_id = 5;
 }
 
 message GetTaskRequest {
-  int64 id = 1;
+  int64 task_id = 1;
 }
 
 message ListTasksRequest {
-  int64 specialist_id = 1;
-  bool completed = 2;
+  string status = 2;
 }
 
 message ListTasksResponse {
