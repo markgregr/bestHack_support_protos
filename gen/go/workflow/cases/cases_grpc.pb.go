@@ -2,7 +2,7 @@
 // versions:
 // - protoc-gen-go-grpc v1.3.0
 // - protoc             v5.26.0--rc3
-// source: workflow/cases.proto
+// source: workflow/cases/cases.proto
 
 package casesv1
 
@@ -179,5 +179,5 @@ var CaseService_ServiceDesc = grpc.ServiceDesc{
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
-	Metadata: "workflow/cases.proto",
+	Metadata: "workflow/cases/cases.proto",
 }

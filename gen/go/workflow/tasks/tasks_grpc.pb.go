@@ -2,7 +2,7 @@
 // versions:
 // - protoc-gen-go-grpc v1.3.0
 // - protoc             v5.26.0--rc3
-// source: workflow/tasks.proto
+// source: workflow/tasks/tasks.proto
 
 package tasksv1
 
@@ -216,5 +216,5 @@ var TaskService_ServiceDesc = grpc.ServiceDesc{
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
-	Metadata: "workflow/tasks.proto",
+	Metadata: "workflow/tasks/tasks.proto",
 }
