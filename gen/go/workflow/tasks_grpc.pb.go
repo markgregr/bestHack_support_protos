@@ -2,7 +2,7 @@
 // versions:
 // - protoc-gen-go-grpc v1.3.0
 // - protoc             v5.26.0--rc3
-// source: workflow_managment/workflow_managment.proto
+// source: workflow/tasks.proto
 
 package tasksv1
 
@@ -11,7 +11,6 @@ import (
 	grpc "google.golang.org/grpc"
 	codes "google.golang.org/grpc/codes"
 	status "google.golang.org/grpc/status"
-	emptypb "google.golang.org/protobuf/types/known/emptypb"
 )
 
 // This is a compile-time assertion to ensure that this generated file
@@ -20,10 +19,10 @@ import (
 const _ = grpc.SupportPackageIsVersion7
 
 const (
-	TaskService_CreateTask_FullMethodName = "/tasks.TaskService/CreateTask"
-	TaskService_GetTask_FullMethodName    = "/tasks.TaskService/GetTask"
-	TaskService_ListTasks_FullMethodName  = "/tasks.TaskService/ListTasks"
-	TaskService_AssignTask_FullMethodName = "/tasks.TaskService/AssignTask"
+	TaskService_CreateTask_FullMethodName       = "/tasks.TaskService/CreateTask"
+	TaskService_GetTask_FullMethodName          = "/tasks.TaskService/GetTask"
+	TaskService_ListTasks_FullMethodName        = "/tasks.TaskService/ListTasks"
+	TaskService_ChangeTaskStatus_FullMethodName = "/tasks.TaskService/ChangeTaskStatus"
 )
 
 // TaskServiceClient is the client API for TaskService service.
@@ -33,7 +32,7 @@ type TaskServiceClient interface {
 	CreateTask(ctx context.Context, in *CreateTaskRequest, opts ...grpc.CallOption) (*Task, error)
 	GetTask(ctx context.Context, in *GetTaskRequest, opts ...grpc.CallOption) (*Task, error)
 	ListTasks(ctx context.Context, in *ListTasksRequest, opts ...grpc.CallOption) (*ListTasksResponse, error)
-	AssignTask(ctx context.Context, in *AssignTaskRequest, opts ...grpc.CallOption) (*emptypb.Empty, error)
+	ChangeTaskStatus(ctx context.Context, in *ChangeTaskStatusRequest, opts ...grpc.CallOption) (*Task, error)
 }
 
 type taskServiceClient struct {
@@ -71,9 +70,9 @@ func (c *taskServiceClient) ListTasks(ctx context.Context, in *ListTasksRequest,
 	return out, nil
 }
 
-func (c *taskServiceClient) AssignTask(ctx context.Context, in *AssignTaskRequest, opts ...grpc.CallOption) (*emptypb.Empty, error) {
-	out := new(emptypb.Empty)
-	err := c.cc.Invoke(ctx, TaskService_AssignTask_FullMethodName, in, out, opts...)
+func (c *taskServiceClient) ChangeTaskStatus(ctx context.Context, in *ChangeTaskStatusRequest, opts ...grpc.CallOption) (*Task, error) {
+	out := new(Task)
+	err := c.cc.Invoke(ctx, TaskService_ChangeTaskStatus_FullMethodName, in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -87,7 +86,7 @@ type TaskServiceServer interface {
 	CreateTask(context.Context, *CreateTaskRequest) (*Task, error)
 	GetTask(context.Context, *GetTaskRequest) (*Task, error)
 	ListTasks(context.Context, *ListTasksRequest) (*ListTasksResponse, error)
-	AssignTask(context.Context, *AssignTaskRequest) (*emptypb.Empty, error)
+	ChangeTaskStatus(context.Context, *ChangeTaskStatusRequest) (*Task, error)
 	mustEmbedUnimplementedTaskServiceServer()
 }
 
@@ -104,8 +103,8 @@ func (UnimplementedTaskServiceServer) GetTask(context.Context, *GetTaskRequest) 
 func (UnimplementedTaskServiceServer) ListTasks(context.Context, *ListTasksRequest) (*ListTasksResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method ListTasks not implemented")
 }
-func (UnimplementedTaskServiceServer) AssignTask(context.Context, *AssignTaskRequest) (*emptypb.Empty, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method AssignTask not implemented")
+func (UnimplementedTaskServiceServer) ChangeTaskStatus(context.Context, *ChangeTaskStatusRequest) (*Task, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method ChangeTaskStatus not implemented")
 }
 func (UnimplementedTaskServiceServer) mustEmbedUnimplementedTaskServiceServer() {}
 
@@ -174,20 +173,20 @@ func _TaskService_ListTasks_Handler(srv interface{}, ctx context.Context, dec fu
 	return interceptor(ctx, in, info, handler)
 }
 
-func _TaskService_AssignTask_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(AssignTaskRequest)
+func _TaskService_ChangeTaskStatus_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ChangeTaskStatusRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(TaskServiceServer).AssignTask(ctx, in)
+		return srv.(TaskServiceServer).ChangeTaskStatus(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: TaskService_AssignTask_FullMethodName,
+		FullMethod: TaskService_ChangeTaskStatus_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(TaskServiceServer).AssignTask(ctx, req.(*AssignTaskRequest))
+		return srv.(TaskServiceServer).ChangeTaskStatus(ctx, req.(*ChangeTaskStatusRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -212,10 +211,10 @@ var TaskService_ServiceDesc = grpc.ServiceDesc{
 			Handler:    _TaskService_ListTasks_Handler,
 		},
 		{
-			MethodName: "AssignTask",
-			Handler:    _TaskService_AssignTask_Handler,
+			MethodName: "ChangeTaskStatus",
+			Handler:    _TaskService_ChangeTaskStatus_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
-	Metadata: "workflow_managment/workflow_managment.proto",
+	Metadata: "workflow/tasks.proto",
 }

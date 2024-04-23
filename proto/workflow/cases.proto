@@ -1,0 +1,39 @@
+syntax = "proto3";
+
+package cases;
+
+option go_package = "grevtsov.cases.v1;casesv1";
+import "google/protobuf/empty.proto";
+
+service CaseService {
+  rpc CreateCase (CreateCaseRequest) returns (Case);
+  rpc GetCase (GetCaseRequest) returns (Case);
+  rpc ListCases (ListCasesRequest) returns (ListCasesResponse);
+}
+
+message Case {
+  int64 id = 1;
+  int64 cluster_id = 2;
+  string title = 3;
+  string description = 4;
+  string solution = 5;
+}
+
+message CreateCaseRequest {
+  int64 cluster_id = 1;
+  string title = 2;
+  string description = 3;
+  string solution = 4;
+}
+
+message GetCaseRequest {
+  int64 id = 1;
+}
+
+message ListCasesRequest {
+  int64 cluster_id = 1;
+}
+
+message ListCasesResponse {
+  repeated Case cases = 1;
+}
