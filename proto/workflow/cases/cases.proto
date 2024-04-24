@@ -7,8 +7,8 @@ import "google/protobuf/empty.proto";
 
 service CaseService {
   rpc CreateCase (CreateCaseRequest) returns (Case);
-  rpc UpdateCase (Case) returns (Case);
-  rpc DeleteCase (GetCaseRequest) returns (google.protobuf.Empty);
+  rpc UpdateCase (UpdateCaseRequest) returns (Case);
+  rpc DeleteCase (DeleteCaseRequest) returns (google.protobuf.Empty);
   rpc ListClusters (google.protobuf.Empty) returns (ListClustersResponse);
   rpc GetCasesFromCluster (GetCasesFromClusterRequest) returns (GetCasesFromClusterResponse);
 }
@@ -69,4 +69,14 @@ message GetCasesFromClusterResponse {
 
 message ListClustersResponse {
   repeated Cluster clusters = 1;
+}
+
+message UpdateCaseRequest {
+  int64 id = 1;
+  string title = 2;
+  string solution = 4;
+}
+
+message DeleteCaseRequest {
+  int64 id = 1;
 }

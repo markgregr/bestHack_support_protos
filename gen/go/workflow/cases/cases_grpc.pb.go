@@ -32,8 +32,8 @@ const (
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type CaseServiceClient interface {
 	CreateCase(ctx context.Context, in *CreateCaseRequest, opts ...grpc.CallOption) (*Case, error)
-	UpdateCase(ctx context.Context, in *Case, opts ...grpc.CallOption) (*Case, error)
-	DeleteCase(ctx context.Context, in *GetCaseRequest, opts ...grpc.CallOption) (*emptypb.Empty, error)
+	UpdateCase(ctx context.Context, in *UpdateCaseRequest, opts ...grpc.CallOption) (*Case, error)
+	DeleteCase(ctx context.Context, in *DeleteCaseRequest, opts ...grpc.CallOption) (*emptypb.Empty, error)
 	ListClusters(ctx context.Context, in *emptypb.Empty, opts ...grpc.CallOption) (*ListClustersResponse, error)
 	GetCasesFromCluster(ctx context.Context, in *GetCasesFromClusterRequest, opts ...grpc.CallOption) (*GetCasesFromClusterResponse, error)
 }
@@ -55,7 +55,7 @@ func (c *caseServiceClient) CreateCase(ctx context.Context, in *CreateCaseReques
 	return out, nil
 }
 
-func (c *caseServiceClient) UpdateCase(ctx context.Context, in *Case, opts ...grpc.CallOption) (*Case, error) {
+func (c *caseServiceClient) UpdateCase(ctx context.Context, in *UpdateCaseRequest, opts ...grpc.CallOption) (*Case, error) {
 	out := new(Case)
 	err := c.cc.Invoke(ctx, CaseService_UpdateCase_FullMethodName, in, out, opts...)
 	if err != nil {
@@ -64,7 +64,7 @@ func (c *caseServiceClient) UpdateCase(ctx context.Context, in *Case, opts ...gr
 	return out, nil
 }
 
-func (c *caseServiceClient) DeleteCase(ctx context.Context, in *GetCaseRequest, opts ...grpc.CallOption) (*emptypb.Empty, error) {
+func (c *caseServiceClient) DeleteCase(ctx context.Context, in *DeleteCaseRequest, opts ...grpc.CallOption) (*emptypb.Empty, error) {
 	out := new(emptypb.Empty)
 	err := c.cc.Invoke(ctx, CaseService_DeleteCase_FullMethodName, in, out, opts...)
 	if err != nil {
@@ -96,8 +96,8 @@ func (c *caseServiceClient) GetCasesFromCluster(ctx context.Context, in *GetCase
 // for forward compatibility
 type CaseServiceServer interface {
 	CreateCase(context.Context, *CreateCaseRequest) (*Case, error)
-	UpdateCase(context.Context, *Case) (*Case, error)
-	DeleteCase(context.Context, *GetCaseRequest) (*emptypb.Empty, error)
+	UpdateCase(context.Context, *UpdateCaseRequest) (*Case, error)
+	DeleteCase(context.Context, *DeleteCaseRequest) (*emptypb.Empty, error)
 	ListClusters(context.Context, *emptypb.Empty) (*ListClustersResponse, error)
 	GetCasesFromCluster(context.Context, *GetCasesFromClusterRequest) (*GetCasesFromClusterResponse, error)
 	mustEmbedUnimplementedCaseServiceServer()
@@ -110,10 +110,10 @@ type UnimplementedCaseServiceServer struct {
 func (UnimplementedCaseServiceServer) CreateCase(context.Context, *CreateCaseRequest) (*Case, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method CreateCase not implemented")
 }
-func (UnimplementedCaseServiceServer) UpdateCase(context.Context, *Case) (*Case, error) {
+func (UnimplementedCaseServiceServer) UpdateCase(context.Context, *UpdateCaseRequest) (*Case, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method UpdateCase not implemented")
 }
-func (UnimplementedCaseServiceServer) DeleteCase(context.Context, *GetCaseRequest) (*emptypb.Empty, error) {
+func (UnimplementedCaseServiceServer) DeleteCase(context.Context, *DeleteCaseRequest) (*emptypb.Empty, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method DeleteCase not implemented")
 }
 func (UnimplementedCaseServiceServer) ListClusters(context.Context, *emptypb.Empty) (*ListClustersResponse, error) {
@@ -154,7 +154,7 @@ func _CaseService_CreateCase_Handler(srv interface{}, ctx context.Context, dec f
 }
 
 func _CaseService_UpdateCase_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(Case)
+	in := new(UpdateCaseRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
@@ -166,13 +166,13 @@ func _CaseService_UpdateCase_Handler(srv interface{}, ctx context.Context, dec f
 		FullMethod: CaseService_UpdateCase_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(CaseServiceServer).UpdateCase(ctx, req.(*Case))
+		return srv.(CaseServiceServer).UpdateCase(ctx, req.(*UpdateCaseRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
 func _CaseService_DeleteCase_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(GetCaseRequest)
+	in := new(DeleteCaseRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
@@ -184,7 +184,7 @@ func _CaseService_DeleteCase_Handler(srv interface{}, ctx context.Context, dec f
 		FullMethod: CaseService_DeleteCase_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(CaseServiceServer).DeleteCase(ctx, req.(*GetCaseRequest))
+		return srv.(CaseServiceServer).DeleteCase(ctx, req.(*DeleteCaseRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
