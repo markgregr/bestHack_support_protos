@@ -23,6 +23,7 @@ const (
 	TaskService_GetTask_FullMethodName          = "/tasks.TaskService/GetTask"
 	TaskService_ListTasks_FullMethodName        = "/tasks.TaskService/ListTasks"
 	TaskService_ChangeTaskStatus_FullMethodName = "/tasks.TaskService/ChangeTaskStatus"
+	TaskService_AddCaseToTask_FullMethodName    = "/tasks.TaskService/AddCaseToTask"
 )
 
 // TaskServiceClient is the client API for TaskService service.
@@ -33,6 +34,7 @@ type TaskServiceClient interface {
 	GetTask(ctx context.Context, in *GetTaskRequest, opts ...grpc.CallOption) (*Task, error)
 	ListTasks(ctx context.Context, in *ListTasksRequest, opts ...grpc.CallOption) (*ListTasksResponse, error)
 	ChangeTaskStatus(ctx context.Context, in *ChangeTaskStatusRequest, opts ...grpc.CallOption) (*Task, error)
+	AddCaseToTask(ctx context.Context, in *AddCaseToTaskRequest, opts ...grpc.CallOption) (*Task, error)
 }
 
 type taskServiceClient struct {
@@ -79,6 +81,15 @@ func (c *taskServiceClient) ChangeTaskStatus(ctx context.Context, in *ChangeTask
 	return out, nil
 }
 
+func (c *taskServiceClient) AddCaseToTask(ctx context.Context, in *AddCaseToTaskRequest, opts ...grpc.CallOption) (*Task, error) {
+	out := new(Task)
+	err := c.cc.Invoke(ctx, TaskService_AddCaseToTask_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // TaskServiceServer is the server API for TaskService service.
 // All implementations must embed UnimplementedTaskServiceServer
 // for forward compatibility
@@ -87,6 +98,7 @@ type TaskServiceServer interface {
 	GetTask(context.Context, *GetTaskRequest) (*Task, error)
 	ListTasks(context.Context, *ListTasksRequest) (*ListTasksResponse, error)
 	ChangeTaskStatus(context.Context, *ChangeTaskStatusRequest) (*Task, error)
+	AddCaseToTask(context.Context, *AddCaseToTaskRequest) (*Task, error)
 	mustEmbedUnimplementedTaskServiceServer()
 }
 
@@ -105,6 +117,9 @@ func (UnimplementedTaskServiceServer) ListTasks(context.Context, *ListTasksReque
 }
 func (UnimplementedTaskServiceServer) ChangeTaskStatus(context.Context, *ChangeTaskStatusRequest) (*Task, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method ChangeTaskStatus not implemented")
+}
+func (UnimplementedTaskServiceServer) AddCaseToTask(context.Context, *AddCaseToTaskRequest) (*Task, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method AddCaseToTask not implemented")
 }
 func (UnimplementedTaskServiceServer) mustEmbedUnimplementedTaskServiceServer() {}
 
@@ -191,6 +206,24 @@ func _TaskService_ChangeTaskStatus_Handler(srv interface{}, ctx context.Context,
 	return interceptor(ctx, in, info, handler)
 }
 
+func _TaskService_AddCaseToTask_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(AddCaseToTaskRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(TaskServiceServer).AddCaseToTask(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: TaskService_AddCaseToTask_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(TaskServiceServer).AddCaseToTask(ctx, req.(*AddCaseToTaskRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // TaskService_ServiceDesc is the grpc.ServiceDesc for TaskService service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -213,6 +246,10 @@ var TaskService_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "ChangeTaskStatus",
 			Handler:    _TaskService_ChangeTaskStatus_Handler,
+		},
+		{
+			MethodName: "AddCaseToTask",
+			Handler:    _TaskService_AddCaseToTask_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

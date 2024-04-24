@@ -7,9 +7,10 @@ import "google/protobuf/empty.proto";
 
 service CaseService {
   rpc CreateCase (CreateCaseRequest) returns (Case);
-  rpc GetCase (GetCaseRequest) returns (Case);
-  rpc ListCases (google.protobuf.Empty) returns (ListCasesResponse);
-  rpc GetCluster (GetClusterRequest) returns (Cluster);
+  rpc UpdateCase (Case) returns (Case);
+  rpc DeleteCase (GetCaseRequest) returns (google.protobuf.Empty);
+  rpc ListClusters (google.protobuf.Empty) returns (ListClustersResponse);
+  rpc GetCasesFromCluster (GetCasesFromClusterRequest) returns (GetCasesFromClusterResponse);
 }
 
 message Case {
@@ -23,8 +24,6 @@ message Cluster {
   int64 id = 1;
   string name = 2;
   int64 frequency = 3;
-  repeated Case cases = 4;
-  repeated Task tasks = 5;
 }
 
 message Task {
@@ -60,10 +59,14 @@ message GetCaseRequest {
   int64 id = 1;
 }
 
-message ListCasesResponse {
+message GetCasesFromClusterRequest {
+  int64 id = 1;
+}
+
+message GetCasesFromClusterResponse {
   repeated Case cases = 1;
 }
 
-message GetClusterRequest {
-  int64 id = 1;
+message ListClustersResponse {
+  repeated Cluster clusters = 1;
 }
