@@ -33,7 +33,7 @@ message Task {
   string description = 3;
   string email = 4;
   TaskStatus status = 5;
-  int64 case_id = 6;
+  Case case = 6;
   string created_at = 8;
   string formed_at = 9;
   string completed_at = 10;
@@ -41,8 +41,8 @@ message Task {
 }
 
 message User {
-  string email = 1;
-  string name = 2;
+  int64 id = 1;
+  string email = 2;
 }
 
 enum TaskStatus {
