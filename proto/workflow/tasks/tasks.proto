@@ -15,7 +15,7 @@ message Task {
   int64 id = 1;
   string title = 2;
   string description = 3;
-  optional TaskStatus status = 4;
+  TaskStatus status = 4;
   optional Case case = 5;
   optional Cluster cluster = 6;
   string created_at = 7;
