@@ -17,7 +17,7 @@ message Task {
   string description = 3;
   string email = 4;
   TaskStatus status = 5;
-  int64 case_id = 6;
+  Case Case = 6;
   Cluster cluster = 7;
   string created_at = 8;
   string formed_at = 9;
