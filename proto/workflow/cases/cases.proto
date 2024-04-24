@@ -73,8 +73,8 @@ message ListClustersResponse {
 
 message UpdateCaseRequest {
   int64 id = 1;
-  string title = 2;
-  string solution = 4;
+  optional string title = 2;
+  optional string solution = 4;
 }
 
 message DeleteCaseRequest {
