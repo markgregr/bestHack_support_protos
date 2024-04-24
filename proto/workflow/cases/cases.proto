@@ -52,7 +52,7 @@ enum TaskStatus {
 }
 
 message CreateCaseRequest {
-  int64 cluster_index = 1;
+  int64 cluster_id = 1;
   string title = 2;
   string solution = 4;
 }
