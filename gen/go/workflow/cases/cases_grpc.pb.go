@@ -11,6 +11,7 @@ import (
 	grpc "google.golang.org/grpc"
 	codes "google.golang.org/grpc/codes"
 	status "google.golang.org/grpc/status"
+	emptypb "google.golang.org/protobuf/types/known/emptypb"
 )
 
 // This is a compile-time assertion to ensure that this generated file
@@ -31,7 +32,7 @@ const (
 type CaseServiceClient interface {
 	CreateCase(ctx context.Context, in *CreateCaseRequest, opts ...grpc.CallOption) (*Case, error)
 	GetCase(ctx context.Context, in *GetCaseRequest, opts ...grpc.CallOption) (*Case, error)
-	ListCases(ctx context.Context, in *ListCasesRequest, opts ...grpc.CallOption) (*ListCasesResponse, error)
+	ListCases(ctx context.Context, in *emptypb.Empty, opts ...grpc.CallOption) (*ListCasesResponse, error)
 	GetCluster(ctx context.Context, in *GetClusterRequest, opts ...grpc.CallOption) (*Cluster, error)
 }
 
@@ -61,7 +62,7 @@ func (c *caseServiceClient) GetCase(ctx context.Context, in *GetCaseRequest, opt
 	return out, nil
 }
 
-func (c *caseServiceClient) ListCases(ctx context.Context, in *ListCasesRequest, opts ...grpc.CallOption) (*ListCasesResponse, error) {
+func (c *caseServiceClient) ListCases(ctx context.Context, in *emptypb.Empty, opts ...grpc.CallOption) (*ListCasesResponse, error) {
 	out := new(ListCasesResponse)
 	err := c.cc.Invoke(ctx, CaseService_ListCases_FullMethodName, in, out, opts...)
 	if err != nil {
@@ -85,7 +86,7 @@ func (c *caseServiceClient) GetCluster(ctx context.Context, in *GetClusterReques
 type CaseServiceServer interface {
 	CreateCase(context.Context, *CreateCaseRequest) (*Case, error)
 	GetCase(context.Context, *GetCaseRequest) (*Case, error)
-	ListCases(context.Context, *ListCasesRequest) (*ListCasesResponse, error)
+	ListCases(context.Context, *emptypb.Empty) (*ListCasesResponse, error)
 	GetCluster(context.Context, *GetClusterRequest) (*Cluster, error)
 	mustEmbedUnimplementedCaseServiceServer()
 }
@@ -100,7 +101,7 @@ func (UnimplementedCaseServiceServer) CreateCase(context.Context, *CreateCaseReq
 func (UnimplementedCaseServiceServer) GetCase(context.Context, *GetCaseRequest) (*Case, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetCase not implemented")
 }
-func (UnimplementedCaseServiceServer) ListCases(context.Context, *ListCasesRequest) (*ListCasesResponse, error) {
+func (UnimplementedCaseServiceServer) ListCases(context.Context, *emptypb.Empty) (*ListCasesResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method ListCases not implemented")
 }
 func (UnimplementedCaseServiceServer) GetCluster(context.Context, *GetClusterRequest) (*Cluster, error) {
@@ -156,7 +157,7 @@ func _CaseService_GetCase_Handler(srv interface{}, ctx context.Context, dec func
 }
 
 func _CaseService_ListCases_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(ListCasesRequest)
+	in := new(emptypb.Empty)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
@@ -168,7 +169,7 @@ func _CaseService_ListCases_Handler(srv interface{}, ctx context.Context, dec fu
 		FullMethod: CaseService_ListCases_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(CaseServiceServer).ListCases(ctx, req.(*ListCasesRequest))
+		return srv.(CaseServiceServer).ListCases(ctx, req.(*emptypb.Empty))
 	}
 	return interceptor(ctx, in, info, handler)
 }

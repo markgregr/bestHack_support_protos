@@ -8,15 +8,14 @@ import "google/protobuf/empty.proto";
 service CaseService {
   rpc CreateCase (CreateCaseRequest) returns (Case);
   rpc GetCase (GetCaseRequest) returns (Case);
-  rpc ListCases (ListCasesRequest) returns (ListCasesResponse);
+  rpc ListCases (google.protobuf.Empty) returns (ListCasesResponse);
   rpc GetCluster (GetClusterRequest) returns (Cluster);
 }
 
 message Case {
   int64 id = 1;
-  int64 cluster_id = 2;
+  Cluster cluster = 2;
   string title = 3;
-  string description = 4;
   string solution = 5;
 }
 
@@ -25,21 +24,41 @@ message Cluster {
   string name = 2;
   int64 frequency = 3;
   repeated Case cases = 4;
+  repeated Task tasks = 5;
+}
+
+message Task {
+  int64 id = 1;
+  string title = 2;
+  string description = 3;
+  string email = 4;
+  TaskStatus status = 5;
+  int64 case_id = 6;
+  string created_at = 8;
+  string formed_at = 9;
+  string completed_at = 10;
+  User user = 11;
+}
+
+message User {
+  string email = 1;
+  string name = 2;
+}
+
+enum TaskStatus {
+  OPEN = 0;
+  IN_PROGRESS = 1;
+  CLOSED = 2;
 }
 
 message CreateCaseRequest {
-  int64 cluster_id = 1;
+  int64 cluster_index = 1;
   string title = 2;
-  string description = 3;
   string solution = 4;
 }
 
 message GetCaseRequest {
   int64 id = 1;
-}
-
-message ListCasesRequest {
-  int64 cluster_id = 1;
 }
 
 message ListCasesResponse {
