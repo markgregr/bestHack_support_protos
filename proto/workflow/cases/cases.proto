@@ -14,7 +14,7 @@ service CaseService {
 
 message Case {
   int64 id = 1;
-  Cluster cluster = 2;
+  optional Cluster cluster = 2;
   string title = 3;
   string solution = 5;
 }
@@ -31,13 +31,12 @@ message Task {
   int64 id = 1;
   string title = 2;
   string description = 3;
-  string email = 4;
-  TaskStatus status = 5;
-  Case case = 6;
+  optional TaskStatus status = 5;
+  optional Case case = 6;
   string created_at = 8;
-  string formed_at = 9;
-  string completed_at = 10;
-  User user = 11;
+  optional string formed_at = 9;
+  optional string completed_at = 10;
+  optional User user = 11;
 }
 
 message User {

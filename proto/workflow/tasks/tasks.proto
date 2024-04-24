@@ -15,14 +15,13 @@ message Task {
   int64 id = 1;
   string title = 2;
   string description = 3;
-  string email = 4;
-  TaskStatus status = 5;
-  Case case = 6;
-  Cluster cluster = 7;
-  string created_at = 8;
-  string formed_at = 9;
-  string completed_at = 10;
-  User user = 11;
+  optional TaskStatus status = 4;
+  optional Case case = 5;
+  optional Cluster cluster = 6;
+  string created_at = 7;
+  optional string formed_at = 8;
+  optional string completed_at = 9;
+  optional User user = 10;
 }
 
 message User {
@@ -41,7 +40,7 @@ message Case {
   int64 id = 1;
   int64 cluster_id = 2;
   string title = 3;
-  string solution = 5;
+  string solution = 4;
 }
 
 message CreateTaskRequest {
