@@ -22,6 +22,7 @@ const (
 	CaseService_CreateCase_FullMethodName = "/cases.CaseService/CreateCase"
 	CaseService_GetCase_FullMethodName    = "/cases.CaseService/GetCase"
 	CaseService_ListCases_FullMethodName  = "/cases.CaseService/ListCases"
+	CaseService_GetCluster_FullMethodName = "/cases.CaseService/GetCluster"
 )
 
 // CaseServiceClient is the client API for CaseService service.
@@ -31,6 +32,7 @@ type CaseServiceClient interface {
 	CreateCase(ctx context.Context, in *CreateCaseRequest, opts ...grpc.CallOption) (*Case, error)
 	GetCase(ctx context.Context, in *GetCaseRequest, opts ...grpc.CallOption) (*Case, error)
 	ListCases(ctx context.Context, in *ListCasesRequest, opts ...grpc.CallOption) (*ListCasesResponse, error)
+	GetCluster(ctx context.Context, in *GetClusterRequest, opts ...grpc.CallOption) (*Cluster, error)
 }
 
 type caseServiceClient struct {
@@ -68,6 +70,15 @@ func (c *caseServiceClient) ListCases(ctx context.Context, in *ListCasesRequest,
 	return out, nil
 }
 
+func (c *caseServiceClient) GetCluster(ctx context.Context, in *GetClusterRequest, opts ...grpc.CallOption) (*Cluster, error) {
+	out := new(Cluster)
+	err := c.cc.Invoke(ctx, CaseService_GetCluster_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // CaseServiceServer is the server API for CaseService service.
 // All implementations must embed UnimplementedCaseServiceServer
 // for forward compatibility
@@ -75,6 +86,7 @@ type CaseServiceServer interface {
 	CreateCase(context.Context, *CreateCaseRequest) (*Case, error)
 	GetCase(context.Context, *GetCaseRequest) (*Case, error)
 	ListCases(context.Context, *ListCasesRequest) (*ListCasesResponse, error)
+	GetCluster(context.Context, *GetClusterRequest) (*Cluster, error)
 	mustEmbedUnimplementedCaseServiceServer()
 }
 
@@ -90,6 +102,9 @@ func (UnimplementedCaseServiceServer) GetCase(context.Context, *GetCaseRequest) 
 }
 func (UnimplementedCaseServiceServer) ListCases(context.Context, *ListCasesRequest) (*ListCasesResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method ListCases not implemented")
+}
+func (UnimplementedCaseServiceServer) GetCluster(context.Context, *GetClusterRequest) (*Cluster, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetCluster not implemented")
 }
 func (UnimplementedCaseServiceServer) mustEmbedUnimplementedCaseServiceServer() {}
 
@@ -158,6 +173,24 @@ func _CaseService_ListCases_Handler(srv interface{}, ctx context.Context, dec fu
 	return interceptor(ctx, in, info, handler)
 }
 
+func _CaseService_GetCluster_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetClusterRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(CaseServiceServer).GetCluster(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: CaseService_GetCluster_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(CaseServiceServer).GetCluster(ctx, req.(*GetClusterRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // CaseService_ServiceDesc is the grpc.ServiceDesc for CaseService service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -176,6 +209,10 @@ var CaseService_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "ListCases",
 			Handler:    _CaseService_ListCases_Handler,
+		},
+		{
+			MethodName: "GetCluster",
+			Handler:    _CaseService_GetCluster_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

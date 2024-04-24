@@ -9,6 +9,7 @@ service CaseService {
   rpc CreateCase (CreateCaseRequest) returns (Case);
   rpc GetCase (GetCaseRequest) returns (Case);
   rpc ListCases (ListCasesRequest) returns (ListCasesResponse);
+  rpc GetCluster (GetClusterRequest) returns (Cluster);
 }
 
 message Case {
@@ -17,6 +18,15 @@ message Case {
   string title = 3;
   string description = 4;
   string solution = 5;
+}
+
+message Cluster {
+  int64 id = 1;
+  string title = 2;
+  string description = 3;
+  string solution = 4;
+  int64 frequency = 5;
+  repeated Case cases = 6;
 }
 
 message CreateCaseRequest {
@@ -36,4 +46,8 @@ message ListCasesRequest {
 
 message ListCasesResponse {
   repeated Case cases = 1;
+}
+
+message GetClusterRequest {
+  int64 id = 1;
 }
