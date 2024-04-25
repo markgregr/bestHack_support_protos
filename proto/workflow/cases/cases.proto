@@ -11,6 +11,7 @@ service CaseService {
   rpc DeleteCase (DeleteCaseRequest) returns (google.protobuf.Empty);
   rpc ListClusters (google.protobuf.Empty) returns (ListClustersResponse);
   rpc GetCasesFromCluster (GetCasesFromClusterRequest) returns (GetCasesFromClusterResponse);
+  rpc UpdateClusterName (UpdateClusterNameRequest) returns (Cluster);
 }
 
 message Case {
@@ -78,5 +79,9 @@ message UpdateCaseRequest {
 }
 
 message DeleteCaseRequest {
+  int64 id = 1;
+}
+
+message UpdateClusterNameRequest {
   int64 id = 1;
 }

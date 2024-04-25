@@ -25,6 +25,7 @@ const (
 	CaseService_DeleteCase_FullMethodName          = "/cases.CaseService/DeleteCase"
 	CaseService_ListClusters_FullMethodName        = "/cases.CaseService/ListClusters"
 	CaseService_GetCasesFromCluster_FullMethodName = "/cases.CaseService/GetCasesFromCluster"
+	CaseService_UpdateClusterName_FullMethodName   = "/cases.CaseService/UpdateClusterName"
 )
 
 // CaseServiceClient is the client API for CaseService service.
@@ -36,6 +37,7 @@ type CaseServiceClient interface {
 	DeleteCase(ctx context.Context, in *DeleteCaseRequest, opts ...grpc.CallOption) (*emptypb.Empty, error)
 	ListClusters(ctx context.Context, in *emptypb.Empty, opts ...grpc.CallOption) (*ListClustersResponse, error)
 	GetCasesFromCluster(ctx context.Context, in *GetCasesFromClusterRequest, opts ...grpc.CallOption) (*GetCasesFromClusterResponse, error)
+	UpdateClusterName(ctx context.Context, in *UpdateClusterNameRequest, opts ...grpc.CallOption) (*Cluster, error)
 }
 
 type caseServiceClient struct {
@@ -91,6 +93,15 @@ func (c *caseServiceClient) GetCasesFromCluster(ctx context.Context, in *GetCase
 	return out, nil
 }
 
+func (c *caseServiceClient) UpdateClusterName(ctx context.Context, in *UpdateClusterNameRequest, opts ...grpc.CallOption) (*Cluster, error) {
+	out := new(Cluster)
+	err := c.cc.Invoke(ctx, CaseService_UpdateClusterName_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // CaseServiceServer is the server API for CaseService service.
 // All implementations must embed UnimplementedCaseServiceServer
 // for forward compatibility
@@ -100,6 +111,7 @@ type CaseServiceServer interface {
 	DeleteCase(context.Context, *DeleteCaseRequest) (*emptypb.Empty, error)
 	ListClusters(context.Context, *emptypb.Empty) (*ListClustersResponse, error)
 	GetCasesFromCluster(context.Context, *GetCasesFromClusterRequest) (*GetCasesFromClusterResponse, error)
+	UpdateClusterName(context.Context, *UpdateClusterNameRequest) (*Cluster, error)
 	mustEmbedUnimplementedCaseServiceServer()
 }
 
@@ -121,6 +133,9 @@ func (UnimplementedCaseServiceServer) ListClusters(context.Context, *emptypb.Emp
 }
 func (UnimplementedCaseServiceServer) GetCasesFromCluster(context.Context, *GetCasesFromClusterRequest) (*GetCasesFromClusterResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetCasesFromCluster not implemented")
+}
+func (UnimplementedCaseServiceServer) UpdateClusterName(context.Context, *UpdateClusterNameRequest) (*Cluster, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method UpdateClusterName not implemented")
 }
 func (UnimplementedCaseServiceServer) mustEmbedUnimplementedCaseServiceServer() {}
 
@@ -225,6 +240,24 @@ func _CaseService_GetCasesFromCluster_Handler(srv interface{}, ctx context.Conte
 	return interceptor(ctx, in, info, handler)
 }
 
+func _CaseService_UpdateClusterName_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(UpdateClusterNameRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(CaseServiceServer).UpdateClusterName(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: CaseService_UpdateClusterName_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(CaseServiceServer).UpdateClusterName(ctx, req.(*UpdateClusterNameRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // CaseService_ServiceDesc is the grpc.ServiceDesc for CaseService service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -251,6 +284,10 @@ var CaseService_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "GetCasesFromCluster",
 			Handler:    _CaseService_GetCasesFromCluster_Handler,
+		},
+		{
+			MethodName: "UpdateClusterName",
+			Handler:    _CaseService_UpdateClusterName_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
