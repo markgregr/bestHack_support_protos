@@ -82,5 +82,5 @@ message AddCaseToTaskRequest {
 
 message AddSolutionToTaskRequest {
   int64 task_id = 1;
-  string solutiom = 2;
+  string solution = 2;
 }
