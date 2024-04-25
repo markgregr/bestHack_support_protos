@@ -17,11 +17,11 @@ message Task {
   int64 id = 1;
   string title = 2;
   string description = 3;
-  optional string solution = 4;
   TaskStatus status = 5;
   optional Case case = 6;
   optional Cluster cluster = 7;
   string created_at = 8;
+  optional string solution = 4;
   optional string formed_at = 9;
   optional string completed_at = 10;
   optional User user = 11;
