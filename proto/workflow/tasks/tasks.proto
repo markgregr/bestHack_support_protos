@@ -11,6 +11,8 @@ service TaskService {
   rpc ChangeTaskStatus (ChangeTaskStatusRequest) returns (Task);
   rpc AddCaseToTask (AddCaseToTaskRequest) returns (Task);
   rpc AddSolutionToTask (AddSolutionToTaskRequest) returns (Task);
+  rpc RemoveSolutionFromTask (RemoveSolutionFromTaskRequest) returns (Task);
+  rpc RemoveCaseFromTask (RemoveCaseFromTaskRequest) returns (Task);
 }
 
 message Task {
@@ -83,4 +85,12 @@ message AddCaseToTaskRequest {
 message AddSolutionToTaskRequest {
   int64 task_id = 1;
   string solution = 2;
+}
+
+message RemoveSolutionFromTaskRequest {
+  int64 task_id = 1;
+}
+
+message RemoveCaseFromTaskRequest {
+  int64 task_id = 1;
 }

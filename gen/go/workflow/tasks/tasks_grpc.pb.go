@@ -19,12 +19,14 @@ import (
 const _ = grpc.SupportPackageIsVersion7
 
 const (
-	TaskService_CreateTask_FullMethodName        = "/tasks.TaskService/CreateTask"
-	TaskService_GetTask_FullMethodName           = "/tasks.TaskService/GetTask"
-	TaskService_ListTasks_FullMethodName         = "/tasks.TaskService/ListTasks"
-	TaskService_ChangeTaskStatus_FullMethodName  = "/tasks.TaskService/ChangeTaskStatus"
-	TaskService_AddCaseToTask_FullMethodName     = "/tasks.TaskService/AddCaseToTask"
-	TaskService_AddSolutionToTask_FullMethodName = "/tasks.TaskService/AddSolutionToTask"
+	TaskService_CreateTask_FullMethodName             = "/tasks.TaskService/CreateTask"
+	TaskService_GetTask_FullMethodName                = "/tasks.TaskService/GetTask"
+	TaskService_ListTasks_FullMethodName              = "/tasks.TaskService/ListTasks"
+	TaskService_ChangeTaskStatus_FullMethodName       = "/tasks.TaskService/ChangeTaskStatus"
+	TaskService_AddCaseToTask_FullMethodName          = "/tasks.TaskService/AddCaseToTask"
+	TaskService_AddSolutionToTask_FullMethodName      = "/tasks.TaskService/AddSolutionToTask"
+	TaskService_RemoveSolutionFromTask_FullMethodName = "/tasks.TaskService/RemoveSolutionFromTask"
+	TaskService_RemoveCaseFromTask_FullMethodName     = "/tasks.TaskService/RemoveCaseFromTask"
 )
 
 // TaskServiceClient is the client API for TaskService service.
@@ -37,6 +39,8 @@ type TaskServiceClient interface {
 	ChangeTaskStatus(ctx context.Context, in *ChangeTaskStatusRequest, opts ...grpc.CallOption) (*Task, error)
 	AddCaseToTask(ctx context.Context, in *AddCaseToTaskRequest, opts ...grpc.CallOption) (*Task, error)
 	AddSolutionToTask(ctx context.Context, in *AddSolutionToTaskRequest, opts ...grpc.CallOption) (*Task, error)
+	RemoveSolutionFromTask(ctx context.Context, in *RemoveSolutionFromTaskRequest, opts ...grpc.CallOption) (*Task, error)
+	RemoveCaseFromTask(ctx context.Context, in *RemoveCaseFromTaskRequest, opts ...grpc.CallOption) (*Task, error)
 }
 
 type taskServiceClient struct {
@@ -101,6 +105,24 @@ func (c *taskServiceClient) AddSolutionToTask(ctx context.Context, in *AddSoluti
 	return out, nil
 }
 
+func (c *taskServiceClient) RemoveSolutionFromTask(ctx context.Context, in *RemoveSolutionFromTaskRequest, opts ...grpc.CallOption) (*Task, error) {
+	out := new(Task)
+	err := c.cc.Invoke(ctx, TaskService_RemoveSolutionFromTask_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *taskServiceClient) RemoveCaseFromTask(ctx context.Context, in *RemoveCaseFromTaskRequest, opts ...grpc.CallOption) (*Task, error) {
+	out := new(Task)
+	err := c.cc.Invoke(ctx, TaskService_RemoveCaseFromTask_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // TaskServiceServer is the server API for TaskService service.
 // All implementations must embed UnimplementedTaskServiceServer
 // for forward compatibility
@@ -111,6 +133,8 @@ type TaskServiceServer interface {
 	ChangeTaskStatus(context.Context, *ChangeTaskStatusRequest) (*Task, error)
 	AddCaseToTask(context.Context, *AddCaseToTaskRequest) (*Task, error)
 	AddSolutionToTask(context.Context, *AddSolutionToTaskRequest) (*Task, error)
+	RemoveSolutionFromTask(context.Context, *RemoveSolutionFromTaskRequest) (*Task, error)
+	RemoveCaseFromTask(context.Context, *RemoveCaseFromTaskRequest) (*Task, error)
 	mustEmbedUnimplementedTaskServiceServer()
 }
 
@@ -135,6 +159,12 @@ func (UnimplementedTaskServiceServer) AddCaseToTask(context.Context, *AddCaseToT
 }
 func (UnimplementedTaskServiceServer) AddSolutionToTask(context.Context, *AddSolutionToTaskRequest) (*Task, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method AddSolutionToTask not implemented")
+}
+func (UnimplementedTaskServiceServer) RemoveSolutionFromTask(context.Context, *RemoveSolutionFromTaskRequest) (*Task, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method RemoveSolutionFromTask not implemented")
+}
+func (UnimplementedTaskServiceServer) RemoveCaseFromTask(context.Context, *RemoveCaseFromTaskRequest) (*Task, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method RemoveCaseFromTask not implemented")
 }
 func (UnimplementedTaskServiceServer) mustEmbedUnimplementedTaskServiceServer() {}
 
@@ -257,6 +287,42 @@ func _TaskService_AddSolutionToTask_Handler(srv interface{}, ctx context.Context
 	return interceptor(ctx, in, info, handler)
 }
 
+func _TaskService_RemoveSolutionFromTask_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(RemoveSolutionFromTaskRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(TaskServiceServer).RemoveSolutionFromTask(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: TaskService_RemoveSolutionFromTask_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(TaskServiceServer).RemoveSolutionFromTask(ctx, req.(*RemoveSolutionFromTaskRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _TaskService_RemoveCaseFromTask_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(RemoveCaseFromTaskRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(TaskServiceServer).RemoveCaseFromTask(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: TaskService_RemoveCaseFromTask_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(TaskServiceServer).RemoveCaseFromTask(ctx, req.(*RemoveCaseFromTaskRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // TaskService_ServiceDesc is the grpc.ServiceDesc for TaskService service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -287,6 +353,14 @@ var TaskService_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "AddSolutionToTask",
 			Handler:    _TaskService_AddSolutionToTask_Handler,
+		},
+		{
+			MethodName: "RemoveSolutionFromTask",
+			Handler:    _TaskService_RemoveSolutionFromTask_Handler,
+		},
+		{
+			MethodName: "RemoveCaseFromTask",
+			Handler:    _TaskService_RemoveCaseFromTask_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

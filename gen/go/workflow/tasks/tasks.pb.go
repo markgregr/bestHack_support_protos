@@ -762,6 +762,100 @@ func (x *AddSolutionToTaskRequest) GetSolution() string {
 	return ""
 }
 
+type RemoveSolutionFromTaskRequest struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	TaskId int64 `protobuf:"varint,1,opt,name=task_id,json=taskId,proto3" json:"task_id,omitempty"`
+}
+
+func (x *RemoveSolutionFromTaskRequest) Reset() {
+	*x = RemoveSolutionFromTaskRequest{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_workflow_tasks_tasks_proto_msgTypes[11]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *RemoveSolutionFromTaskRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*RemoveSolutionFromTaskRequest) ProtoMessage() {}
+
+func (x *RemoveSolutionFromTaskRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_workflow_tasks_tasks_proto_msgTypes[11]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use RemoveSolutionFromTaskRequest.ProtoReflect.Descriptor instead.
+func (*RemoveSolutionFromTaskRequest) Descriptor() ([]byte, []int) {
+	return file_workflow_tasks_tasks_proto_rawDescGZIP(), []int{11}
+}
+
+func (x *RemoveSolutionFromTaskRequest) GetTaskId() int64 {
+	if x != nil {
+		return x.TaskId
+	}
+	return 0
+}
+
+type RemoveCaseFromTaskRequest struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	TaskId int64 `protobuf:"varint,1,opt,name=task_id,json=taskId,proto3" json:"task_id,omitempty"`
+}
+
+func (x *RemoveCaseFromTaskRequest) Reset() {
+	*x = RemoveCaseFromTaskRequest{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_workflow_tasks_tasks_proto_msgTypes[12]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *RemoveCaseFromTaskRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*RemoveCaseFromTaskRequest) ProtoMessage() {}
+
+func (x *RemoveCaseFromTaskRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_workflow_tasks_tasks_proto_msgTypes[12]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use RemoveCaseFromTaskRequest.ProtoReflect.Descriptor instead.
+func (*RemoveCaseFromTaskRequest) Descriptor() ([]byte, []int) {
+	return file_workflow_tasks_tasks_proto_rawDescGZIP(), []int{12}
+}
+
+func (x *RemoveCaseFromTaskRequest) GetTaskId() int64 {
+	if x != nil {
+		return x.TaskId
+	}
+	return 0
+}
+
 var File_workflow_tasks_tasks_proto protoreflect.FileDescriptor
 
 var file_workflow_tasks_tasks_proto_rawDesc = []byte{
@@ -843,10 +937,17 @@ var file_workflow_tasks_tasks_proto_rawDesc = []byte{
 	0x17, 0x0a, 0x07, 0x74, 0x61, 0x73, 0x6b, 0x5f, 0x69, 0x64, 0x18, 0x01, 0x20, 0x01, 0x28, 0x03,
 	0x52, 0x06, 0x74, 0x61, 0x73, 0x6b, 0x49, 0x64, 0x12, 0x1a, 0x0a, 0x08, 0x73, 0x6f, 0x6c, 0x75,
 	0x74, 0x69, 0x6f, 0x6e, 0x18, 0x02, 0x20, 0x01, 0x28, 0x09, 0x52, 0x08, 0x73, 0x6f, 0x6c, 0x75,
-	0x74, 0x69, 0x6f, 0x6e, 0x2a, 0x33, 0x0a, 0x0a, 0x54, 0x61, 0x73, 0x6b, 0x53, 0x74, 0x61, 0x74,
+	0x74, 0x69, 0x6f, 0x6e, 0x22, 0x38, 0x0a, 0x1d, 0x52, 0x65, 0x6d, 0x6f, 0x76, 0x65, 0x53, 0x6f,
+	0x6c, 0x75, 0x74, 0x69, 0x6f, 0x6e, 0x46, 0x72, 0x6f, 0x6d, 0x54, 0x61, 0x73, 0x6b, 0x52, 0x65,
+	0x71, 0x75, 0x65, 0x73, 0x74, 0x12, 0x17, 0x0a, 0x07, 0x74, 0x61, 0x73, 0x6b, 0x5f, 0x69, 0x64,
+	0x18, 0x01, 0x20, 0x01, 0x28, 0x03, 0x52, 0x06, 0x74, 0x61, 0x73, 0x6b, 0x49, 0x64, 0x22, 0x34,
+	0x0a, 0x19, 0x52, 0x65, 0x6d, 0x6f, 0x76, 0x65, 0x43, 0x61, 0x73, 0x65, 0x46, 0x72, 0x6f, 0x6d,
+	0x54, 0x61, 0x73, 0x6b, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x12, 0x17, 0x0a, 0x07, 0x74,
+	0x61, 0x73, 0x6b, 0x5f, 0x69, 0x64, 0x18, 0x01, 0x20, 0x01, 0x28, 0x03, 0x52, 0x06, 0x74, 0x61,
+	0x73, 0x6b, 0x49, 0x64, 0x2a, 0x33, 0x0a, 0x0a, 0x54, 0x61, 0x73, 0x6b, 0x53, 0x74, 0x61, 0x74,
 	0x75, 0x73, 0x12, 0x08, 0x0a, 0x04, 0x4f, 0x50, 0x45, 0x4e, 0x10, 0x00, 0x12, 0x0f, 0x0a, 0x0b,
 	0x49, 0x4e, 0x5f, 0x50, 0x52, 0x4f, 0x47, 0x52, 0x45, 0x53, 0x53, 0x10, 0x01, 0x12, 0x0a, 0x0a,
-	0x06, 0x43, 0x4c, 0x4f, 0x53, 0x45, 0x44, 0x10, 0x02, 0x32, 0xf0, 0x02, 0x0a, 0x0b, 0x54, 0x61,
+	0x06, 0x43, 0x4c, 0x4f, 0x53, 0x45, 0x44, 0x10, 0x02, 0x32, 0x82, 0x04, 0x0a, 0x0b, 0x54, 0x61,
 	0x73, 0x6b, 0x53, 0x65, 0x72, 0x76, 0x69, 0x63, 0x65, 0x12, 0x33, 0x0a, 0x0a, 0x43, 0x72, 0x65,
 	0x61, 0x74, 0x65, 0x54, 0x61, 0x73, 0x6b, 0x12, 0x18, 0x2e, 0x74, 0x61, 0x73, 0x6b, 0x73, 0x2e,
 	0x43, 0x72, 0x65, 0x61, 0x74, 0x65, 0x54, 0x61, 0x73, 0x6b, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73,
@@ -869,10 +970,19 @@ var file_workflow_tasks_tasks_proto_rawDesc = []byte{
 	0x53, 0x6f, 0x6c, 0x75, 0x74, 0x69, 0x6f, 0x6e, 0x54, 0x6f, 0x54, 0x61, 0x73, 0x6b, 0x12, 0x1f,
 	0x2e, 0x74, 0x61, 0x73, 0x6b, 0x73, 0x2e, 0x41, 0x64, 0x64, 0x53, 0x6f, 0x6c, 0x75, 0x74, 0x69,
 	0x6f, 0x6e, 0x54, 0x6f, 0x54, 0x61, 0x73, 0x6b, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x1a,
-	0x0b, 0x2e, 0x74, 0x61, 0x73, 0x6b, 0x73, 0x2e, 0x54, 0x61, 0x73, 0x6b, 0x42, 0x1b, 0x5a, 0x19,
-	0x67, 0x72, 0x65, 0x76, 0x74, 0x73, 0x6f, 0x76, 0x2e, 0x74, 0x61, 0x73, 0x6b, 0x73, 0x2e, 0x76,
-	0x31, 0x3b, 0x74, 0x61, 0x73, 0x6b, 0x73, 0x76, 0x31, 0x62, 0x06, 0x70, 0x72, 0x6f, 0x74, 0x6f,
-	0x33,
+	0x0b, 0x2e, 0x74, 0x61, 0x73, 0x6b, 0x73, 0x2e, 0x54, 0x61, 0x73, 0x6b, 0x12, 0x4b, 0x0a, 0x16,
+	0x52, 0x65, 0x6d, 0x6f, 0x76, 0x65, 0x53, 0x6f, 0x6c, 0x75, 0x74, 0x69, 0x6f, 0x6e, 0x46, 0x72,
+	0x6f, 0x6d, 0x54, 0x61, 0x73, 0x6b, 0x12, 0x24, 0x2e, 0x74, 0x61, 0x73, 0x6b, 0x73, 0x2e, 0x52,
+	0x65, 0x6d, 0x6f, 0x76, 0x65, 0x53, 0x6f, 0x6c, 0x75, 0x74, 0x69, 0x6f, 0x6e, 0x46, 0x72, 0x6f,
+	0x6d, 0x54, 0x61, 0x73, 0x6b, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x1a, 0x0b, 0x2e, 0x74,
+	0x61, 0x73, 0x6b, 0x73, 0x2e, 0x54, 0x61, 0x73, 0x6b, 0x12, 0x43, 0x0a, 0x12, 0x52, 0x65, 0x6d,
+	0x6f, 0x76, 0x65, 0x43, 0x61, 0x73, 0x65, 0x46, 0x72, 0x6f, 0x6d, 0x54, 0x61, 0x73, 0x6b, 0x12,
+	0x20, 0x2e, 0x74, 0x61, 0x73, 0x6b, 0x73, 0x2e, 0x52, 0x65, 0x6d, 0x6f, 0x76, 0x65, 0x43, 0x61,
+	0x73, 0x65, 0x46, 0x72, 0x6f, 0x6d, 0x54, 0x61, 0x73, 0x6b, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73,
+	0x74, 0x1a, 0x0b, 0x2e, 0x74, 0x61, 0x73, 0x6b, 0x73, 0x2e, 0x54, 0x61, 0x73, 0x6b, 0x42, 0x1b,
+	0x5a, 0x19, 0x67, 0x72, 0x65, 0x76, 0x74, 0x73, 0x6f, 0x76, 0x2e, 0x74, 0x61, 0x73, 0x6b, 0x73,
+	0x2e, 0x76, 0x31, 0x3b, 0x74, 0x61, 0x73, 0x6b, 0x73, 0x76, 0x31, 0x62, 0x06, 0x70, 0x72, 0x6f,
+	0x74, 0x6f, 0x33,
 }
 
 var (
@@ -888,20 +998,22 @@ func file_workflow_tasks_tasks_proto_rawDescGZIP() []byte {
 }
 
 var file_workflow_tasks_tasks_proto_enumTypes = make([]protoimpl.EnumInfo, 1)
-var file_workflow_tasks_tasks_proto_msgTypes = make([]protoimpl.MessageInfo, 11)
+var file_workflow_tasks_tasks_proto_msgTypes = make([]protoimpl.MessageInfo, 13)
 var file_workflow_tasks_tasks_proto_goTypes = []interface{}{
-	(TaskStatus)(0),                  // 0: tasks.TaskStatus
-	(*Task)(nil),                     // 1: tasks.Task
-	(*User)(nil),                     // 2: tasks.User
-	(*Cluster)(nil),                  // 3: tasks.Cluster
-	(*Case)(nil),                     // 4: tasks.Case
-	(*CreateTaskRequest)(nil),        // 5: tasks.CreateTaskRequest
-	(*GetTaskRequest)(nil),           // 6: tasks.GetTaskRequest
-	(*ListTasksRequest)(nil),         // 7: tasks.ListTasksRequest
-	(*ListTasksResponse)(nil),        // 8: tasks.ListTasksResponse
-	(*ChangeTaskStatusRequest)(nil),  // 9: tasks.ChangeTaskStatusRequest
-	(*AddCaseToTaskRequest)(nil),     // 10: tasks.AddCaseToTaskRequest
-	(*AddSolutionToTaskRequest)(nil), // 11: tasks.AddSolutionToTaskRequest
+	(TaskStatus)(0),                       // 0: tasks.TaskStatus
+	(*Task)(nil),                          // 1: tasks.Task
+	(*User)(nil),                          // 2: tasks.User
+	(*Cluster)(nil),                       // 3: tasks.Cluster
+	(*Case)(nil),                          // 4: tasks.Case
+	(*CreateTaskRequest)(nil),             // 5: tasks.CreateTaskRequest
+	(*GetTaskRequest)(nil),                // 6: tasks.GetTaskRequest
+	(*ListTasksRequest)(nil),              // 7: tasks.ListTasksRequest
+	(*ListTasksResponse)(nil),             // 8: tasks.ListTasksResponse
+	(*ChangeTaskStatusRequest)(nil),       // 9: tasks.ChangeTaskStatusRequest
+	(*AddCaseToTaskRequest)(nil),          // 10: tasks.AddCaseToTaskRequest
+	(*AddSolutionToTaskRequest)(nil),      // 11: tasks.AddSolutionToTaskRequest
+	(*RemoveSolutionFromTaskRequest)(nil), // 12: tasks.RemoveSolutionFromTaskRequest
+	(*RemoveCaseFromTaskRequest)(nil),     // 13: tasks.RemoveCaseFromTaskRequest
 }
 var file_workflow_tasks_tasks_proto_depIdxs = []int32{
 	0,  // 0: tasks.Task.status:type_name -> tasks.TaskStatus
@@ -916,14 +1028,18 @@ var file_workflow_tasks_tasks_proto_depIdxs = []int32{
 	9,  // 9: tasks.TaskService.ChangeTaskStatus:input_type -> tasks.ChangeTaskStatusRequest
 	10, // 10: tasks.TaskService.AddCaseToTask:input_type -> tasks.AddCaseToTaskRequest
 	11, // 11: tasks.TaskService.AddSolutionToTask:input_type -> tasks.AddSolutionToTaskRequest
-	1,  // 12: tasks.TaskService.CreateTask:output_type -> tasks.Task
-	1,  // 13: tasks.TaskService.GetTask:output_type -> tasks.Task
-	8,  // 14: tasks.TaskService.ListTasks:output_type -> tasks.ListTasksResponse
-	1,  // 15: tasks.TaskService.ChangeTaskStatus:output_type -> tasks.Task
-	1,  // 16: tasks.TaskService.AddCaseToTask:output_type -> tasks.Task
-	1,  // 17: tasks.TaskService.AddSolutionToTask:output_type -> tasks.Task
-	12, // [12:18] is the sub-list for method output_type
-	6,  // [6:12] is the sub-list for method input_type
+	12, // 12: tasks.TaskService.RemoveSolutionFromTask:input_type -> tasks.RemoveSolutionFromTaskRequest
+	13, // 13: tasks.TaskService.RemoveCaseFromTask:input_type -> tasks.RemoveCaseFromTaskRequest
+	1,  // 14: tasks.TaskService.CreateTask:output_type -> tasks.Task
+	1,  // 15: tasks.TaskService.GetTask:output_type -> tasks.Task
+	8,  // 16: tasks.TaskService.ListTasks:output_type -> tasks.ListTasksResponse
+	1,  // 17: tasks.TaskService.ChangeTaskStatus:output_type -> tasks.Task
+	1,  // 18: tasks.TaskService.AddCaseToTask:output_type -> tasks.Task
+	1,  // 19: tasks.TaskService.AddSolutionToTask:output_type -> tasks.Task
+	1,  // 20: tasks.TaskService.RemoveSolutionFromTask:output_type -> tasks.Task
+	1,  // 21: tasks.TaskService.RemoveCaseFromTask:output_type -> tasks.Task
+	14, // [14:22] is the sub-list for method output_type
+	6,  // [6:14] is the sub-list for method input_type
 	6,  // [6:6] is the sub-list for extension type_name
 	6,  // [6:6] is the sub-list for extension extendee
 	0,  // [0:6] is the sub-list for field type_name
@@ -1067,6 +1183,30 @@ func file_workflow_tasks_tasks_proto_init() {
 				return nil
 			}
 		}
+		file_workflow_tasks_tasks_proto_msgTypes[11].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*RemoveSolutionFromTaskRequest); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_workflow_tasks_tasks_proto_msgTypes[12].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*RemoveCaseFromTaskRequest); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
 	}
 	file_workflow_tasks_tasks_proto_msgTypes[0].OneofWrappers = []interface{}{}
 	type x struct{}
@@ -1075,7 +1215,7 @@ func file_workflow_tasks_tasks_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: file_workflow_tasks_tasks_proto_rawDesc,
 			NumEnums:      1,
-			NumMessages:   11,
+			NumMessages:   13,
 			NumExtensions: 0,
 			NumServices:   1,
 		},
