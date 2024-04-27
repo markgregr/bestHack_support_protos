@@ -27,6 +27,7 @@ const (
 	TaskService_AddSolutionToTask_FullMethodName      = "/tasks.TaskService/AddSolutionToTask"
 	TaskService_RemoveSolutionFromTask_FullMethodName = "/tasks.TaskService/RemoveSolutionFromTask"
 	TaskService_RemoveCaseFromTask_FullMethodName     = "/tasks.TaskService/RemoveCaseFromTask"
+	TaskService_AppointUserToTask_FullMethodName      = "/tasks.TaskService/AppointUserToTask"
 )
 
 // TaskServiceClient is the client API for TaskService service.
@@ -41,6 +42,7 @@ type TaskServiceClient interface {
 	AddSolutionToTask(ctx context.Context, in *AddSolutionToTaskRequest, opts ...grpc.CallOption) (*Task, error)
 	RemoveSolutionFromTask(ctx context.Context, in *RemoveSolutionFromTaskRequest, opts ...grpc.CallOption) (*Task, error)
 	RemoveCaseFromTask(ctx context.Context, in *RemoveCaseFromTaskRequest, opts ...grpc.CallOption) (*Task, error)
+	AppointUserToTask(ctx context.Context, in *AppointUserToTaskRequest, opts ...grpc.CallOption) (*Task, error)
 }
 
 type taskServiceClient struct {
@@ -123,6 +125,15 @@ func (c *taskServiceClient) RemoveCaseFromTask(ctx context.Context, in *RemoveCa
 	return out, nil
 }
 
+func (c *taskServiceClient) AppointUserToTask(ctx context.Context, in *AppointUserToTaskRequest, opts ...grpc.CallOption) (*Task, error) {
+	out := new(Task)
+	err := c.cc.Invoke(ctx, TaskService_AppointUserToTask_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // TaskServiceServer is the server API for TaskService service.
 // All implementations must embed UnimplementedTaskServiceServer
 // for forward compatibility
@@ -135,6 +146,7 @@ type TaskServiceServer interface {
 	AddSolutionToTask(context.Context, *AddSolutionToTaskRequest) (*Task, error)
 	RemoveSolutionFromTask(context.Context, *RemoveSolutionFromTaskRequest) (*Task, error)
 	RemoveCaseFromTask(context.Context, *RemoveCaseFromTaskRequest) (*Task, error)
+	AppointUserToTask(context.Context, *AppointUserToTaskRequest) (*Task, error)
 	mustEmbedUnimplementedTaskServiceServer()
 }
 
@@ -165,6 +177,9 @@ func (UnimplementedTaskServiceServer) RemoveSolutionFromTask(context.Context, *R
 }
 func (UnimplementedTaskServiceServer) RemoveCaseFromTask(context.Context, *RemoveCaseFromTaskRequest) (*Task, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method RemoveCaseFromTask not implemented")
+}
+func (UnimplementedTaskServiceServer) AppointUserToTask(context.Context, *AppointUserToTaskRequest) (*Task, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method AppointUserToTask not implemented")
 }
 func (UnimplementedTaskServiceServer) mustEmbedUnimplementedTaskServiceServer() {}
 
@@ -323,6 +338,24 @@ func _TaskService_RemoveCaseFromTask_Handler(srv interface{}, ctx context.Contex
 	return interceptor(ctx, in, info, handler)
 }
 
+func _TaskService_AppointUserToTask_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(AppointUserToTaskRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(TaskServiceServer).AppointUserToTask(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: TaskService_AppointUserToTask_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(TaskServiceServer).AppointUserToTask(ctx, req.(*AppointUserToTaskRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // TaskService_ServiceDesc is the grpc.ServiceDesc for TaskService service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -361,6 +394,10 @@ var TaskService_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "RemoveCaseFromTask",
 			Handler:    _TaskService_RemoveCaseFromTask_Handler,
+		},
+		{
+			MethodName: "AppointUserToTask",
+			Handler:    _TaskService_AppointUserToTask_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
