@@ -29,7 +29,7 @@ message Task {
   optional string formed_at = 9;
   optional string completed_at = 10;
   optional User user = 11;
-  int64 fire = 12;
+  bool fire = 12;
 }
 
 message User {
