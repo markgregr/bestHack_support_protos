@@ -28,6 +28,7 @@ const (
 	TaskService_RemoveSolutionFromTask_FullMethodName = "/tasks.TaskService/RemoveSolutionFromTask"
 	TaskService_RemoveCaseFromTask_FullMethodName     = "/tasks.TaskService/RemoveCaseFromTask"
 	TaskService_AppointUserToTask_FullMethodName      = "/tasks.TaskService/AppointUserToTask"
+	TaskService_FireTask_FullMethodName               = "/tasks.TaskService/FireTask"
 )
 
 // TaskServiceClient is the client API for TaskService service.
@@ -43,6 +44,7 @@ type TaskServiceClient interface {
 	RemoveSolutionFromTask(ctx context.Context, in *RemoveSolutionFromTaskRequest, opts ...grpc.CallOption) (*Task, error)
 	RemoveCaseFromTask(ctx context.Context, in *RemoveCaseFromTaskRequest, opts ...grpc.CallOption) (*Task, error)
 	AppointUserToTask(ctx context.Context, in *AppointUserToTaskRequest, opts ...grpc.CallOption) (*Task, error)
+	FireTask(ctx context.Context, in *FireTaskRequest, opts ...grpc.CallOption) (*Task, error)
 }
 
 type taskServiceClient struct {
@@ -134,6 +136,15 @@ func (c *taskServiceClient) AppointUserToTask(ctx context.Context, in *AppointUs
 	return out, nil
 }
 
+func (c *taskServiceClient) FireTask(ctx context.Context, in *FireTaskRequest, opts ...grpc.CallOption) (*Task, error) {
+	out := new(Task)
+	err := c.cc.Invoke(ctx, TaskService_FireTask_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // TaskServiceServer is the server API for TaskService service.
 // All implementations must embed UnimplementedTaskServiceServer
 // for forward compatibility
@@ -147,6 +158,7 @@ type TaskServiceServer interface {
 	RemoveSolutionFromTask(context.Context, *RemoveSolutionFromTaskRequest) (*Task, error)
 	RemoveCaseFromTask(context.Context, *RemoveCaseFromTaskRequest) (*Task, error)
 	AppointUserToTask(context.Context, *AppointUserToTaskRequest) (*Task, error)
+	FireTask(context.Context, *FireTaskRequest) (*Task, error)
 	mustEmbedUnimplementedTaskServiceServer()
 }
 
@@ -180,6 +192,9 @@ func (UnimplementedTaskServiceServer) RemoveCaseFromTask(context.Context, *Remov
 }
 func (UnimplementedTaskServiceServer) AppointUserToTask(context.Context, *AppointUserToTaskRequest) (*Task, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method AppointUserToTask not implemented")
+}
+func (UnimplementedTaskServiceServer) FireTask(context.Context, *FireTaskRequest) (*Task, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method FireTask not implemented")
 }
 func (UnimplementedTaskServiceServer) mustEmbedUnimplementedTaskServiceServer() {}
 
@@ -356,6 +371,24 @@ func _TaskService_AppointUserToTask_Handler(srv interface{}, ctx context.Context
 	return interceptor(ctx, in, info, handler)
 }
 
+func _TaskService_FireTask_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(FireTaskRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(TaskServiceServer).FireTask(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: TaskService_FireTask_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(TaskServiceServer).FireTask(ctx, req.(*FireTaskRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // TaskService_ServiceDesc is the grpc.ServiceDesc for TaskService service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -398,6 +431,10 @@ var TaskService_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "AppointUserToTask",
 			Handler:    _TaskService_AppointUserToTask_Handler,
+		},
+		{
+			MethodName: "FireTask",
+			Handler:    _TaskService_FireTask_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
