@@ -11,6 +11,7 @@ service Auth {
   rpc Login (LoginRequest) returns (LoginResponse);
   rpc IsAdmin (IsAdminRequest) returns (IsAdminResponse);
   rpc Logout (google.protobuf.Empty) returns (google.protobuf.Empty);
+  rpc BotAuth (BotAuthRequest) returns (google.protobuf.Empty);
 }
 
 message RegisterRequest {
@@ -38,4 +39,11 @@ message IsAdminRequest {
 
 message IsAdminResponse {
   bool isAdmin = 1;
+}
+
+message BotAuthRequest {
+  string email = 1;
+  string password = 2;
+  string username = 3;
+  int32 app_id = 4;
 }
