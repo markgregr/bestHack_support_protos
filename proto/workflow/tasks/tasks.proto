@@ -38,7 +38,7 @@ message Task {
 message User {
   int64 id = 1;
   string email = 2;
-  string avarage_duration = 3;
+  float avarage_duration = 3;
 }
 
 message Cluster {
