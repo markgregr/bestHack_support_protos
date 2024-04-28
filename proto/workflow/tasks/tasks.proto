@@ -3,6 +3,7 @@ syntax = "proto3";
 package tasks;
 
 option go_package = "grevtsov.tasks.v1;tasksv1";
+import "google/protobuf/empty.proto";
 
 service TaskService {
   rpc CreateTask (CreateTaskRequest) returns (Task);
@@ -15,6 +16,8 @@ service TaskService {
   rpc RemoveCaseFromTask (RemoveCaseFromTaskRequest) returns (Task);
   rpc AppointUserToTask (AppointUserToTaskRequest) returns (Task);
   rpc FireTask (FireTaskRequest) returns (Task);
+  rpc ListTasksByUserID (ListTasksByUserIDRequest) returns (ListTasksResponse);
+  rpc ListUsers (google.protobuf.Empty) returns (ListUsersResponse);
 }
 
 message Task {
@@ -106,4 +109,12 @@ message AppointUserToTaskRequest {
 
 message FireTaskRequest {
   int64 task_id = 1;
+}
+
+message ListTasksByUserIDRequest {
+  int64 user_id = 1;
+}
+
+message ListUsersResponse {
+  repeated User users = 1;
 }

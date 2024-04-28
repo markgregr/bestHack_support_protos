@@ -11,6 +11,7 @@ import (
 	grpc "google.golang.org/grpc"
 	codes "google.golang.org/grpc/codes"
 	status "google.golang.org/grpc/status"
+	emptypb "google.golang.org/protobuf/types/known/emptypb"
 )
 
 // This is a compile-time assertion to ensure that this generated file
@@ -29,6 +30,8 @@ const (
 	TaskService_RemoveCaseFromTask_FullMethodName     = "/tasks.TaskService/RemoveCaseFromTask"
 	TaskService_AppointUserToTask_FullMethodName      = "/tasks.TaskService/AppointUserToTask"
 	TaskService_FireTask_FullMethodName               = "/tasks.TaskService/FireTask"
+	TaskService_ListTasksByUserID_FullMethodName      = "/tasks.TaskService/ListTasksByUserID"
+	TaskService_ListUsers_FullMethodName              = "/tasks.TaskService/ListUsers"
 )
 
 // TaskServiceClient is the client API for TaskService service.
@@ -45,6 +48,8 @@ type TaskServiceClient interface {
 	RemoveCaseFromTask(ctx context.Context, in *RemoveCaseFromTaskRequest, opts ...grpc.CallOption) (*Task, error)
 	AppointUserToTask(ctx context.Context, in *AppointUserToTaskRequest, opts ...grpc.CallOption) (*Task, error)
 	FireTask(ctx context.Context, in *FireTaskRequest, opts ...grpc.CallOption) (*Task, error)
+	ListTasksByUserID(ctx context.Context, in *ListTasksByUserIDRequest, opts ...grpc.CallOption) (*ListTasksResponse, error)
+	ListUsers(ctx context.Context, in *emptypb.Empty, opts ...grpc.CallOption) (*ListUsersResponse, error)
 }
 
 type taskServiceClient struct {
@@ -145,6 +150,24 @@ func (c *taskServiceClient) FireTask(ctx context.Context, in *FireTaskRequest, o
 	return out, nil
 }
 
+func (c *taskServiceClient) ListTasksByUserID(ctx context.Context, in *ListTasksByUserIDRequest, opts ...grpc.CallOption) (*ListTasksResponse, error) {
+	out := new(ListTasksResponse)
+	err := c.cc.Invoke(ctx, TaskService_ListTasksByUserID_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *taskServiceClient) ListUsers(ctx context.Context, in *emptypb.Empty, opts ...grpc.CallOption) (*ListUsersResponse, error) {
+	out := new(ListUsersResponse)
+	err := c.cc.Invoke(ctx, TaskService_ListUsers_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // TaskServiceServer is the server API for TaskService service.
 // All implementations must embed UnimplementedTaskServiceServer
 // for forward compatibility
@@ -159,6 +182,8 @@ type TaskServiceServer interface {
 	RemoveCaseFromTask(context.Context, *RemoveCaseFromTaskRequest) (*Task, error)
 	AppointUserToTask(context.Context, *AppointUserToTaskRequest) (*Task, error)
 	FireTask(context.Context, *FireTaskRequest) (*Task, error)
+	ListTasksByUserID(context.Context, *ListTasksByUserIDRequest) (*ListTasksResponse, error)
+	ListUsers(context.Context, *emptypb.Empty) (*ListUsersResponse, error)
 	mustEmbedUnimplementedTaskServiceServer()
 }
 
@@ -195,6 +220,12 @@ func (UnimplementedTaskServiceServer) AppointUserToTask(context.Context, *Appoin
 }
 func (UnimplementedTaskServiceServer) FireTask(context.Context, *FireTaskRequest) (*Task, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method FireTask not implemented")
+}
+func (UnimplementedTaskServiceServer) ListTasksByUserID(context.Context, *ListTasksByUserIDRequest) (*ListTasksResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method ListTasksByUserID not implemented")
+}
+func (UnimplementedTaskServiceServer) ListUsers(context.Context, *emptypb.Empty) (*ListUsersResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method ListUsers not implemented")
 }
 func (UnimplementedTaskServiceServer) mustEmbedUnimplementedTaskServiceServer() {}
 
@@ -389,6 +420,42 @@ func _TaskService_FireTask_Handler(srv interface{}, ctx context.Context, dec fun
 	return interceptor(ctx, in, info, handler)
 }
 
+func _TaskService_ListTasksByUserID_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ListTasksByUserIDRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(TaskServiceServer).ListTasksByUserID(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: TaskService_ListTasksByUserID_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(TaskServiceServer).ListTasksByUserID(ctx, req.(*ListTasksByUserIDRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _TaskService_ListUsers_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(emptypb.Empty)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(TaskServiceServer).ListUsers(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: TaskService_ListUsers_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(TaskServiceServer).ListUsers(ctx, req.(*emptypb.Empty))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // TaskService_ServiceDesc is the grpc.ServiceDesc for TaskService service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -435,6 +502,14 @@ var TaskService_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "FireTask",
 			Handler:    _TaskService_FireTask_Handler,
+		},
+		{
+			MethodName: "ListTasksByUserID",
+			Handler:    _TaskService_ListTasksByUserID_Handler,
+		},
+		{
+			MethodName: "ListUsers",
+			Handler:    _TaskService_ListUsers_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
