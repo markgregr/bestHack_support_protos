@@ -55,8 +55,9 @@ message CreateTaskRequest {
   string title = 1;
   string description = 2;
   int64 cluster_index = 3;
-  int64 frequency = 4;
-  float average_duration = 5;
+  string cluster_name = 4;
+  int64 frequency = 5;
+  float average_duration = 6;
 }
 
 message GetTaskRequest {
